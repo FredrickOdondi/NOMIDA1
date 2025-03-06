@@ -1,0 +1,49 @@
+<section id="configReporsIndex">
+
+  <div class="actions">
+    <h1>Administrar configuraciones de informes</h1>
+
+    <%= link_to "Crear configuracion", new_company_report_configuration_path(@company), class: "btn btn-primary" %>
+  </div>
+
+
+  <table>
+    <thead>
+      <tr>
+        <th>Report Type</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @report_configurations.each do |config| %>
+        <tr>
+          <td><%= config.report_type.titleize %></td>
+          <td>
+            <%= link_to 'Edit', edit_company_report_configuration_path(@company, config) %>
+            <%= link_to 'Delete', company_report_configuration_path(@company, config),
+                data: {turbo_method: :delete, turbo_confirm: '¿Estas seguro de eliminar este estilo?'},
+                class: "btn btn-danger"  %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Ir a compañia', @company, class: "btn btn-primary" %>
+</section>
+
+<style>
+
+  #configReporsIndex {
+    margin: 2rem auto;
+    width: 80%;
+
+  }
+
+  #configReporsIndex .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+</style>

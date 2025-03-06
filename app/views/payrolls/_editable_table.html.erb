@@ -1,0 +1,158 @@
+
+<div id="table-scroll" class="table-scroll">
+
+  <table class="table table-striped editable-table" data-controller="editable-table" data-editable-table-company-id-value="<%= @company.id %>">
+  <thead>
+    <tr>
+    <th rowspan="2">N°</th>
+    <th rowspan="2">Nombre</th>
+    <th rowspan="2">Fecha de Pago</th>
+    <th colspan="5">Horas</th>
+
+    <th rowspan="2">Salario por hora</th>
+    <th rowspan="2">Sueldo Fijo</th>
+    <th rowspan="2">Salario</th>
+    <th rowspan="2">Propinas</th>
+    <th rowspan="2">Otros Pagos sujetos a Contribuciones</th>
+
+    <th rowspan="2">Pago Bruto</th>
+    <th rowspan="2">Seguro Social y Medicare</th>
+    <th rowspan="2">SINOT</th>
+    <th rowspan="2">Seguro Choferil</th>
+    <th rowspan="2">Semanas Trabajadas Choferil</th>
+    <th rowspan="2">Impuesto sobre la Renta (Income Tax)</th>
+    <th rowspan="2">Otras Deducciones 1</th>
+    <th rowspan="2">Otras Deducciones 2</th>
+    <th rowspan="2">Pago Neto</th>
+
+
+
+
+
+    <th rowspan="2">Acciones</th>
+  </tr>
+  <tr>
+    <th>Regulares</th>
+    <th>Extra</th>
+    <th>Vacaciones</th>
+    <th>Enfermedad</th>
+    <th>Total</th>
+  </tr>
+  </thead>
+   <tbody>
+    <% @payrolls.order(index_number: :desc).each do |payroll| %>
+      <tr data-id="<%= payroll.id %>">
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="index_number"><%= payroll.index_number %></td>
+        <td><%= payroll.employee.first_name %> <%= payroll.employee.last_name %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="pay_date"><%= payroll.pay_date %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="regular_hours"><%= payroll.regular_hours %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="overtime_hours"><%= payroll.overtime_hours %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="vacation_hours"><%= payroll.vacation_hours %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="sick_hours"><%= payroll.sick_hours %></td>
+        <td data-id="<%= payroll.id %>" data-field="total_hours" class="tb-no-editable"><%= payroll.total_hours %></td>
+
+        <td data-id="<%= payroll.id %>" data-field="gross_pay" class="tb-no-editable"><%= payroll.employee.hourly_rate %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="fixed_salary"><%= payroll.fixed_salary %></td>
+        <td data-id="<%= payroll.id %>" data-field="gross_pay" class="tb-no-editable"><%= payroll.salary  %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="tips"><%= payroll.tips %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="other_payments_subject_to_contribution"><%= payroll.other_payments_subject_to_contribution %></td>
+        <td data-id="<%= payroll.id %>" data-field="gross_pay" class="tb-no-editable"><%= payroll.gross_pay %></td> <!-- No editable -->
+        <td data-id="<%= payroll.id %>" data-field="social_security_medicare" class="tb-no-editable"><%= payroll.social_security_medicare %></td>
+        <td data-id="<%= payroll.id %>" data-field="sinot" class="tb-no-editable"><%= payroll.sinot %></td>
+        <td data-id="<%= payroll.id %>" data-field="driver_insurance" class="tb-no-editable"><%= payroll.driver_insurance %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="driver_weeks_worked"><%= payroll.driver_weeks_worked %></td>
+        <td data-id="<%= payroll.id %>" data-field="income_tax" class="tb-no-editable"><%= payroll.income_tax %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="other_deductions_1"><%= payroll.other_deductions_1 %></td>
+        <td data-editable-table-target="editable" data-id="<%= payroll.id %>" data-field="other_deductions_2"><%= payroll.other_deductions_2 %></td>
+        <td data-id="<%= payroll.id %>" data-field="net_pay" class="tb-no-editable"><%= payroll.net_pay %></td>
+
+
+
+
+
+        <td>
+          <%= link_to "Eliminar",
+                company_payroll_path(@company, payroll),
+                data: {
+                  turbo_method: :delete, turbo_confirm: "¿Estas seguro de eliminar?" },
+                class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+</div>
+
+
+
+<style>
+
+
+ .table-scroll {
+  position: relative;
+  width:100%;
+  z-index: 1;
+  margin: auto;
+  overflow: auto;
+
+}
+.table-scroll table {
+  width: 100%;
+  min-width: 1280px;
+  margin: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table-wrap {
+  position: relative;
+}
+
+.tb-no-editable {
+  background: red !important;
+}
+.table-scroll th,
+.table-scroll td {
+  padding: 5px 10px;
+  border: 1px solid #000;
+  background: #fff;
+  vertical-align: top;
+}
+.table-scroll thead th {
+  background: #333;
+  color: #fff;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+/* safari and ios need the tfoot itself to be position:sticky also */
+.table-scroll tfoot,
+.table-scroll tfoot th,
+.table-scroll tfoot td {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  background: #666;
+  color: #fff;
+  z-index:4;
+}
+
+a:focus {
+  background: red;
+} /* testing links*/
+
+th:first-child {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #ccc;
+}
+thead th:first-child,
+tfoot th:first-child {
+  z-index: 5;
+}
+
+
+</style>

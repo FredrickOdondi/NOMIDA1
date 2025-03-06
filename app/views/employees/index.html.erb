@@ -1,0 +1,86 @@
+<section  id="employees-index">
+
+  <div class="view-options">
+    <h1>Empleados de <%= @company.name %></h1>
+
+    <div class="search-bar">
+      <%= form_with url: company_employees_path(@company), method: :get, local: true do %>
+        <%= label_tag :search, "Buscar Empleado:" %>
+        <%= text_field_tag :search, params[:search], placeholder: "Nombre del empleado" %>
+        <%= submit_tag "Buscar", class: "btn btn-secondary" %>
+        <% if params[:search].present? %>
+          <%= link_to "Limpiar filtros", company_employees_path(@company), class: "btn btn-secondary" %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= link_to "Agregar Nuevo Empleado", new_company_employee_path(@company), class: "btn btn-primary" %>
+
+
+  </div>
+
+
+
+  <table>
+    <thead class="header-table">
+      <tr>
+        <th>N°</th>
+        <th>Nombre</th>
+        <th>Seguro Social</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Fecha de Inicio</th>
+        <th>Salario</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @employees.each_with_index do |employee, index| %>
+        <tr>
+          <td><%= index + 1  %></td>
+          <td><%= employee.full_name %></td>
+          <td><%= employee.social_security %></td>
+          <td><%= employee.phone_number %></td>
+          <td><%= employee.email %></td>
+          <td><%= employee.start_date %></td>
+          <% if employee.hourly_rate.present?  %>
+            <td><%= "#{number_to_currency(employee.hourly_rate)} /hora" %></td>
+          <% elsif employee.fixed_salary.present? %>
+            <td><%= "#{number_to_currency(employee.fixed_salary)} /mes" %></td>
+          <% else %>
+            <td>No se declaro Salario</td>
+          <% end %>
+
+          <td class="actions-table">
+            <%= link_to "Ver", company_employee_path(@company, employee), class: "btn btn-primary" %>
+            <%= link_to "Editar", edit_company_employee_path(@company, employee), class: "btn btn-primary" %>
+            <%= link_to "Eliminar", company_employee_path(@company, employee),
+                data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro de que deseas eliminar este empleado?"}, class: "btn btn-danger btn-sm" %>
+
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+  <%= paginate @employees %>
+
+</section>
+
+
+<style>
+
+    #employees-index {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding-top: 0.5rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+
+  </style>

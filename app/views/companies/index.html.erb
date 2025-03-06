@@ -1,0 +1,94 @@
+<div id="company-index">
+
+  <div class="view-options">
+    <h1>Mis de Compañías</h1>
+
+    <div class="search-bar">
+      <%= form_with url: companies_path, method: :get, local: true do %>
+        <%= label_tag :search, "Buscar Compañia:" %>
+        <%= text_field_tag :search, params[:search], placeholder: "Nombre de la compañia" %>
+        <%= submit_tag "Buscar", class: "btn btn-secondary" %>
+        <% if params[:search].present? %>
+         <%= link_to "Limpiar filtros", companies_path, class: "btn btn-secondary" %>
+        <% end %>
+      <% end %>
+    </div>
+
+
+    <%= link_to "Crear nueva compañia", new_company_path, class: "btn btn-primary" %>
+
+  </div>
+
+  <table>
+    <thead class="header-table">
+      <tr>
+        <th>N°</th>
+        <th>Nombre</th>
+        <th>Tipo de compañia</th>
+        <th class="hideable-column">Dirección</th>
+        <th class="hideable-column">Teléfono</th>
+        <th class="hideable-column">Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @companies.each_with_index do |company, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= company.name %></td>
+          <td><%= company.entity_type %></td>
+          <td class="hideable-column"><%= company.postal_address %></td>
+          <td class="hideable-column"><%= company.contact_phone %></td>
+          <td class="hideable-column"><%= company.contact_email %></td>
+          <td class="actions-table">
+            <%= link_to "Ver", company_path(company), class: "btn btn-primary" %>
+            <%= link_to "Editar", edit_company_path(company), class: "btn btn-primary" %>
+            <%= link_to "Eliminar", company_path(company), data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro?"},
+                      class: "btn btn-danger btn-sm"%>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @companies %>
+
+  <% unless current_user.terms_accepted && current_user.privacy_accepted%>
+    <div class="terms-and-conditions">
+      <%= render "pages/terms_and_conditions" %>
+      <hr>
+      <%= render "pages/privacy_policy" %>
+      <%= render "pages/terms_and_conditions" %>
+      <%= link_to "Acceptar terminos y condiciones y policas de privacidad", pages_update_terms_and_conditions_path,
+          data: { 'turbo-method' => :post }, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>
+
+
+
+
+<style>
+
+
+
+    #company-index {
+      /* background: linear-gradient(to bottom, #14ABFF, #00DE82); */
+
+      padding: 2rem;
+    }
+
+    .terms-and-conditions {
+      position: absolute;
+      top: 4rem;
+      margin-right: 1.1rem;
+      margin-bottom: 1.1rem;
+      padding: 2rem;
+      border: #007bff 1px solid;
+      background-color:rgba(210, 218, 226, 0.95);
+    }
+
+
+
+</style>

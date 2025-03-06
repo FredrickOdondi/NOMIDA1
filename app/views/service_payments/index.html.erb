@@ -1,0 +1,82 @@
+<section id="service-payments-index">
+  <div class="view-options">
+    <% if @contractor %>
+      <h1>Pagos de Servicio para <%= @contractor.name %></h1>
+      <%= link_to 'Crear Pago de Servicio', new_company_contractor_service_payment_path(@company, @contractor), class: 'btn btn-primary' %>
+    <% else %>
+      <h1>Pagos de Servicios</h1>
+
+      <!-- Filter options-->
+      <div class="search-bar"  data-controller="payrolldates">
+        <%= form_with url: company_service_payments_path(@company), method: :get, local: true do %>
+          <%= label_tag :search, "Contratista" %>
+          <%= text_field_tag :search, params[:search], placeholder: "Contratista" %>
+          <%= label_tag :start_date, "Fecha de inicio" %>
+          <%= date_field_tag :start_date, params[:start_date], data: { payrolldates_target: "periodStart" } %>
+          <%= label_tag :end_date, "Fin" %>
+          <%= date_field_tag :end_date, params[:end_date], data: { payrolldates_target: "periodEnd" } %>
+          <%= submit_tag "Buscar", class: "btn btn-secondary" %>
+          <% if params[:search].present? || params[:start_date].present? || params[:end_date].present? %>
+            <%= link_to "Limpiar filtros", company_service_payments_path(@company), class: "btn btn-secondary" %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= link_to 'Crear Pago de Servicio', new_company_service_payment_path(@company), class: 'btn btn-primary' %>
+    <% end %>
+    <!-- Opciones de filtro, si son necesarias, pueden agregarse aquí -->
+  </div>
+
+  <!-- Tabla de detalles -->
+
+  <table>
+    <thead class="header-table">
+      <tr>
+        <th>N°</th>
+        <th>Fecha de Pago</th>
+        <th>Contratista</th>
+        <th>Importe Bruto</th>
+
+        <th>Importe de Deducción</th>
+        <th>Importe Neto</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @service_payments.order(payment_date: :desc).each_with_index do |payment, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= payment.payment_date %></td>
+          <td><%= link_to payment.contractor.full_name, company_contractor_path(@company, payment.contractor) %></td>
+          <td><%= number_to_currency(payment.gross_amount) %></td>
+
+          <td><%= number_to_currency(payment.deduction_amount) %></td>
+          <td><%= number_to_currency(payment.net_amount) %></td>
+          <td>
+            <%= link_to "Imprimir", company_service_payment_path(@company, payment, format: :pdf), class: "btn btn-primary"  %>
+            <%= link_to "Editar", edit_company_contractor_service_payment_path(@company, payment.contractor, payment), class: "btn btn-primary"  %>
+            <%= link_to "Eliminar", company_service_payment_path(@company, payment),
+                data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro de que deseas eliminar este pago de servicio?" },
+                class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @service_payments %>
+
+</section>
+
+<style>
+  #service-payments-index {
+    padding: 2rem;
+  }
+
+  #service-payments-index h1 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+
+
+</style>

@@ -1,0 +1,11 @@
+<div class="form-container">
+  <%= simple_form_for([company, parameter], html: {class: 'details-container', local: true}) do |f| %>
+    <%= f.hidden_field :company_id, value: company.id %>
+    <%= f.input :parameter_name, label: "Nombre de parametro", wrapper_html: {class: 'detail-item'}, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :parameter_value, label: "Valor", wrapper_html: {class: 'detail-item'}, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <div class="button-group title-item">
+      <%= f.submit "Crear nuevo parametro" %>
+      <%= link_to "Cancelar", company_parameters_path(company)%>
+    </div>
+  <% end %>
+</div>

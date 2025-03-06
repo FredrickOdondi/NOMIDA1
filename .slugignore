@@ -1,0 +1,7 @@
+log/
+tmp/
+spec/
+test/
+node_modules/
+*.log
+*.tmp

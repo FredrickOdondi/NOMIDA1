@@ -1,0 +1,194 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Reporte Nominas</title>  
+  <style>  
+    .container {  
+      width: 100%;  
+      overflow: hidden;  
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: space-between;
+    }  
+    .earnings {  
+      flex: 1;
+      min-width: 48%;
+      max-width: 48%;
+    }  
+    .deductions {  
+      flex: 1;
+      min-width: 48%;
+      max-width: 48%;
+    }  
+    table {  
+      width: 100%;  
+      border-collapse: collapse;  
+    }  
+    table, th, td {  
+      border: 1px solid black;  
+      padding: 8px;  
+      text-align: left;  
+    }  
+    thead {  
+      background-color: #001F3F;  
+      color: white;  
+    }
+    @media (max-width: 768px) {
+      .earnings, .deductions {
+        min-width: 100%;
+        max-width: 100%;
+      }
+    }
+  </style>  
+</head>  
+<body>  
+  <div>  
+    <div class="col-md-6 col-sm-12">  
+      <% if @company.photo.key.present? %>  
+      <%= cl_image_tag @company.photo.key, height: 250, width: 250, crop: :fill %>  
+      <% else %>  
+      <%= image_tag "250.jpg", height: 250, width: 250 %>  
+      <% end %>  
+    </div>  
+
+    <div>  
+      <h1><%= @company.name %></h1>  
+    </div>  
+
+    <div>  
+      <h1>TALONARIO</h1>  
+    </div>  
+  </div>  
+
+  <div>  
+    <table>  
+      <thead>  
+        <td>Información del empleado</td>  
+        <td>Fecha de pago</td>  
+        <td>Periodo</td>  
+      </thead>  
+      <tbody>  
+        <tr><td>ggg</td></tr>  
+      </tbody>  
+    </table>  
+  </div>  
+
+  <div class="container">
+    <div class="earnings">
+      <table>
+        <thead>
+          <tr>
+            <td>Ingresos</td>
+            <td>Horas</td>
+            <td>Monto</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Paga Regular</td>
+            <td><%= @payroll.regular_hours %></td>
+            <td><%= @payroll.regular_hours_payment %></td>
+          </tr>
+          <tr>
+            <td>Paga Extra</td>
+            <td><%= @payroll.overtime_hours %></td>
+            <td><%= @payroll.overtime_hours_payment %></td>
+          </tr>
+          <tr>
+            <td>Paga por Vacaciones</td>
+            <td><%= @payroll.vacation_hours %></td>
+            <td><%= @payroll.vacation_hours_payment %></td>
+          </tr>
+          <tr>
+            <td>Paga por Enfermedad</td>
+            <td><%= @payroll.sick_hours %></td>
+            <td><%= @payroll.sick_hours_payment %></td>
+          </tr>
+          <tr>
+            <td>Sueldo Fijo</td>
+            <td></td>
+            <td><%= @payroll.fixed_salary %></td>
+          </tr>
+          <tr>
+            <td>Propinas</td>
+            <td></td>
+            <td><%= @payroll.tips %></td>
+          </tr>
+          <tr>
+            <td>Comisiones</td>
+            <td></td>
+            <td><%= @payroll.commissions %></td>
+          </tr>
+          <tr>
+            <td>Bonos</td>
+            <td></td>
+            <td><%= @payroll.bonuses %></td>
+          </tr>
+          <tr>
+            <td>Otros Pagos Sujetos a Contribuciones</td>
+            <td></td>
+            <td><%= @payroll.other_payments_subject_to_contribution %></td>
+          </tr>
+          <tr>
+            <td>Otros Pagos no sujetos a retenciones</td>
+            <td></td>
+            <td><%= @payroll.other_payments_not_subject_to_retention %></td>
+          </tr>
+          <tr>
+            <td>Rembolsos de gastos</td>
+            <td></td>
+            <td><%= @payroll.expense_reimbursement %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="deductions">
+      <table>
+        <thead>
+          <tr>
+            <th>Deducciones</th>
+            <th>Actual</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Income Tax</td>
+            <td><%= @payroll.income_tax %></td>
+          </tr>
+          <tr>
+            <td>Seguro Social</td>
+            <td><%= @payroll.social_security_medicare %></td>
+          </tr>
+          <tr>
+            <td>Medicare</td>
+            <td><%= @payroll.medicare %></td>
+          </tr>
+          <tr>
+            <td>SINOT</td>
+            <td><%= @payroll.sinot %></td>
+          </tr>
+          <tr>
+            <td>Plan Médico</td>
+            <td><%= @payroll.medical_plan %></td>
+          </tr>
+          <tr>
+            <td>ASUME</td>
+            <td><%= @payroll.asume %></td>
+          </tr>
+          <tr>
+            <td>Donativos</td>
+            <td><%= @payroll.donations %></td>
+          </tr>
+          <tr>
+            <td>Deducciones</td>
+            <td><%= @payroll.total_deductions %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>  
+</body>  
+</html>  

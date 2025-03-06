@@ -1,0 +1,99 @@
+<div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5> Impuestos y Seguridad </h5>
+  </div>
+  <!-- Taxes and Security -->
+  <div class="fields-group-payroll">
+    <%= form.input :income_tax,
+        label: "Income Tax",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "income_tax", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :social_security_medicare,
+        label: "Seguro Social",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span readonly-field', readonly: true, data: { payrolls_calculations_target: "social_security_medicare", action: "change->payrolls-calculations#updateValues"} } %> <!-- Evaluar cambiar el nombre de social security-->
+    <%= form.input :medicare, label: "Medicare",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span readonly-field', readonly: true, data: { payrolls_calculations_target: "medicare", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :sinot, label: "SINOT",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span readonly-field', readonly: true, data: { payrolls_calculations_target: "sinot", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :medical_plan ,
+        label: "Plan medico",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "medical_plan", action: "change->payrolls-calculations#updateValues"} } %>
+  </div>
+  <div class="fields-total">
+    <h5 data-payrolls-calculations-target="totalTaxesAndSecurity"></h5>
+  </div>
+
+</div>
+
+
+
+<div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5> Otros </h5>
+  </div>
+  <div class="fields-group-payroll">
+    <%= form.input :asume ,
+        label: "ASUME",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "asume", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :donations ,
+        label: "Donativos",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "donations", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :other_deductions_1 ,
+        label: "Deducción",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "other_deductions_1", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :other_deductions_2 ,
+        label: "Deducción",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "other_deductions_2", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :other_deductions_3 ,
+        label: "Deducción",
+        label_html: { class: 'payrolls-inputs-wraps' },
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "other_deductions_3", action: "change->payrolls-calculations#updateValues"} } %>
+  </div>
+  <div class="fields-total">
+    <h5 data-payrolls-calculations-target="totalOtherDeductions"></h5>
+  </div>
+
+</div>
+
+<div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5> Chofer </h5>
+    <input type="checkbox" id="driver_checkbox"
+      data-action="click->payrolls-calculations#togglechoferil"
+      data-payrolls-calculations-target="driver_checkbox">
+  </div>
+  <!-- Other Fields -->
+  <div class="fields-group-payroll d-none" data-payrolls-calculations-target="driver_fields">
+    <%= form.input :driver_weeks_worked,
+        label: "Semanas Trabajadas Choferil",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span',
+          data: { payrolls_calculations_target: "driver_weeks_worked", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :driver_insurance ,
+        label: "Seguro Choferil",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span readonly-field', readonly: true, data: { payrolls_calculations_target: "driver_insurance", action: "change->payrolls-calculations#updateValues"} } %>
+  </div>
+
+</div>

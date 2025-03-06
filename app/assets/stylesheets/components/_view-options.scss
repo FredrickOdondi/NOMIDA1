@@ -1,0 +1,64 @@
+
+
+
+.view-options {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.view-options h1 {
+  font-size: 1.5em;
+  color: #333;
+  margin: 0;
+}
+
+.view-options .btn {
+  padding: 10px 15px;
+  font-size: 1em;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.filter-options .form-group {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.filter-options .form-group label {
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.filter-options .form-group .form-control {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-options .btn {
+  align-self: flex-end;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filter-options .btn:hover {
+  background-color: #0056b3;
+}

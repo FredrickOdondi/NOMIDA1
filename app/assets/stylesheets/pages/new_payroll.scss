@@ -1,0 +1,167 @@
+#new-payroll {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 1.5rem;
+  align-items: center;
+}
+
+
+
+.payroll-dates-card {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 20px;
+}
+
+.section-container {
+  width: 100%;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.section-header {
+  width: 100%;
+  display: flex;
+  border-bottom: 4px solid #ddd;
+  margin-bottom: 8px;
+}
+.section-header h5 {
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  color: #00DE82;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.payroll-group-card {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 10% 80% 10%;
+  /* border: 1px solid #00DE82; */
+}
+
+.fields-group {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  column-gap: 24px;
+  border-bottom: 1px solid #ddd;
+  padding-top: 8px;
+}
+
+.fields-group-payroll {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  column-gap: 24px;
+  border-bottom: 1px solid #ddd;
+  padding-top: 8px;
+}
+
+.group-payroll-title {
+  width: 100%;
+  color: #00DE82;
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+
+
+
+}
+
+.fields-total {
+  /* border: 1px solid #00DE82; */
+
+  display: flex;
+  align-items: center;
+}
+
+.fields-total h5 {
+  font-size: larger;
+  color: #01242499;
+  text-align: center;
+  font-weight: bold;
+  margin: 0 auto;
+
+}
+
+.ingresos {
+  grid-column: 1 / 2; /* Ocupa la primera columna (45%) */
+}
+
+.deducciones {
+  grid-column: 2 / 3; /* Ocupa la segunda columna (45%) */
+}
+
+.neto {
+  grid-column: 3 / 4; /* Ocupa la última columna (10%) */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form Styles */
+.payrolls-inputs-wraps{
+  width: 100%;
+  display: flex;
+  column-gap: 8px;
+}
+
+.payrolls-inputs-span {
+  width: 50%;
+  text-align: center;
+}
+
+.payrolls-label-span {
+  width: 50%;
+  text-align: center;
+}
+
+#driver_checkbox {
+  margin-left: 20px;
+  transform: scale(1.5);
+}
+
+// Mobile view
+@media screen and (max-width: 768px) {
+  .payroll-group-card {
+    grid-template-columns: 100%;
+  }
+  .fields-group {
+    flex-direction: column;
+  }
+
+  .fields-group-payroll {
+    grid-template-columns: 100%;
+  }
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .payroll-group-card {
+    grid-template-columns: 20% 60% 20%;
+  }
+  .fields-group {
+    flex-direction: column;
+  }
+
+  .fields-group-payroll {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}

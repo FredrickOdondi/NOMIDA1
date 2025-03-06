@@ -1,0 +1,151 @@
+
+
+
+  <%= simple_form_for([company, report_configuration], class: "report-style") do |f| %>
+    <div class="report-grid">
+      <div>
+        <% if @company.photo.present? %>
+          <%= cl_image_tag @company.photo.key, class: "img-reports-logo" %>
+        <% else %>
+          <%= image_tag "250.jpg", class: "img-reports-logo" %>
+        <% end %>
+      </div>
+      <div>
+        <%= f.input :report_type,
+        label: "Tipo de Reporte",
+        collection: [["Nomina", "payroll"], ["Servicios", "service_payment"]],
+        wrapper_html: { class: 'detail-item' },
+        label_html: { class: 'label-bold' },
+        input_html: { class: 'input-span' } %>
+
+
+      <p>Customize your report's appearance:</p>
+      <div class="color-containers">
+        <h3>Header report</h3>
+        <div>
+          <%= color_field_tag 'head', report_configuration.layout['header_background'] || '#EDEFF5', id: 'head' %>
+          <label for="head">Header Background</label>
+        </div>
+
+        <div>
+          <%= color_field_tag 'head_text', report_configuration.layout['header_text_color'] || '#000000', id: 'head_text' %>
+            <label for="head_text">Header Text Color</label>
+          </div>
+        </div>
+
+        <div class="color-containers">
+          <h3>Header table</h3>
+          <div>
+          <%= color_field_tag 'table_h_bg_fr', report_configuration.layout['table_header_background'] || '#051245', id: 'table_h_bg_fr' %>
+          <label for="table_bg_fr1">Table Background (Stripe 1)</label>
+          </div>
+          <div>
+            <%= color_field_tag 'table_h_text_c', report_configuration.layout['table_header_text_color'] || '#FFFFFF', id: 'table_h_text_c' %>
+            <label for="table_h_text_c">Table Text Color</label>
+          </div>
+        </div>
+
+        <div class="color-containers">
+          <h3>Report row 1</h3>
+          <div>
+          <%= color_field_tag 'table_bg_fr1', report_configuration.layout['table_background_1'] || '#f6b73c', id: 'table_bg_fr1' %>
+          <label for="table_bg_fr1">Table Background (Stripe 1)</label>
+          </div>
+          <div>
+            <%= color_field_tag 'table_text_c1', report_configuration.layout['table_text_color1'] || '#000000', id: 'table_text_c' %>
+            <label for="table_text_c1">Table Text Color</label>
+          </div>
+        </div>
+
+
+        <div class="color-containers">
+          <h3>Report row 2</h3>
+          <div>
+            <%= color_field_tag 'table_bg_fr2', report_configuration.layout['table_background_2'] || '#FFFFFF', id: 'table_bg_fr2' %>
+            <label for="table_bg_fr2">Table Background (Stripe 2)</label>
+          </div>
+          <div>
+            <%= color_field_tag 'table_text_c2', report_configuration.layout['table_text_color2'] || '#000000', id: 'table_text_c' %>
+            <label for="table_text_c2">Table Text Color</label>
+          </div>
+        </div>
+
+        <div class="color-containers">
+          <h3>Report subtotal</h3>
+          <div>
+            <%= color_field_tag 'table_st_bg_fr2', report_configuration.layout['table_subtotal_background_2'] || '#DFF0D8', id: 'table_st_bg_fr2' %>
+            <label for="table_st_bg_fr2">Table Background (Stripe 2)</label>
+          </div>
+          <div>
+            <%= color_field_tag 'table_st_text_c2', report_configuration.layout['table_subtotal_text_color2'] || '#000000', id: 'table_st_text_c2' %>
+            <label for="table_st_text_c2">Table Text Color</label>
+          </div>
+        </div>
+      </div>
+      <div>
+        <%= image_tag "COLOR CONFIG.png", class: "img-color-config", alt: "indicaciones de cambio de color" %>
+      </div>
+    </div>
+
+     <div class="report-acctions">
+        <%= link_to "Atras", company_report_configurations_path(company), class: "btn btn-primary" %>
+        <%= f.button :submit, class: "btn btn-primary" %>
+      </div>
+
+
+  <% end %>
+
+
+
+
+<style>
+  .report-style {
+    margin: 20px 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .report-grid {
+
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 15% 30% 55%;
+  }
+  .color-containers {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 3px solid purple;
+  }
+
+  .img-color-config {
+    width: 100%;
+
+  }
+
+  .img-reports-logo {
+    width: 100%;
+  }
+
+  .report-acctions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    width: 95%;
+  }
+  /* Mobile style */
+ @media (max-width: 767px) {
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+ }
+
+ /* Tablet style */
+ @media (min-width: 768px) and (max-width: 1023px) {
+  .report-grid {
+    grid-template-columns: 50% 50%;
+  }
+ }
+
+
+</style>

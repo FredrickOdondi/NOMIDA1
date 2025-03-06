@@ -1,0 +1,127 @@
+<div class="form-container" data-controller="payrolls-calculations">
+  <%= simple_form_for([@company, @employee, @payroll], html: { class: 'details-container', local: true }) do |form| %>
+
+    <div class="title-item">
+      <h5> Nueva nomina </h5>
+    </div>
+
+      <%= form.hidden_field   :index_number,
+        value: (@company.payrolls.maximum(:index_number).to_i || 0) + 1 %>
+
+    <div class="payroll-dates-card" data-controller="payrolldates">
+      <%= form.input :employee_id,
+                  collection: @company.employees.order(first_name: :asc),
+                  label: "Empleado",
+                  prompt: "Seleccionar Empleado",
+                  as: :select,
+                  value_method: :id,
+                  label_method: :full_name,
+                  wrapper_html: { class: 'detail-item' },
+                  label_html: { class: 'label-bold' },
+                  input_html: {
+                    class: 'input-span',
+                    data: {
+
+                      employees: @company.employees.to_json(only: [:id, :hourly_rate, :fixed_salary]),
+                      sinot_acumulado: @sinot_acumulado.to_json,
+                      action: "change->payrolls-calculations#updateValues",
+                      payrolls_calculations_target: "employeeSelect"
+                    }
+
+                    } %>
+      <%= form.input :payment_method,
+              collection: ["Transferencia", "Cheque", "Efectivo", "Otro"],
+              label: "Método de Pago",
+              prompt: "Seleccionar Método de Pago",
+              as: :select,
+              wrapper_html: { class: 'detail-item' },
+              label_html: { class: 'label-bold' },
+              input_html: {
+                class: 'input-span',
+                data: {
+                  action: "change->payrolls-calculations#showFields",
+                  payrolls_calculations_target: "paymentMethod"
+
+                } } %>
+
+
+
+        <%= form.input :period_start, label: "Fecha de Inicio",
+                        as: :string,
+                        wrapper_html: { class: 'detail-item' },
+                        label_html: { class: 'label-bold' },
+                        input_html: {
+                          class: 'input-span',
+                          data: {
+                            payrolldates_target: "periodStart",
+                            action: "change->payrolldates#updatePeriodEndMinDate",
+                            action: "change->payrolls-calculations#showFields",
+                            payrolls_calculations_target: "period_start"
+                                  } } %>
+
+        <%= form.input :period_end, label: "Fecha de Fin",
+                        as: :string,
+                        wrapper_html: { class: 'detail-item' },
+                        label_html: { class: 'label-bold' },
+                        input_html: {
+                          class: 'input-span',
+                          data: {
+                            payrolldates_target: "periodEnd",
+                            action: "change->payrolls-calculations#showFields",
+                            payrolls_calculations_target: "period_end"
+                                  } } %>
+
+
+        <%= form.input :pay_date, label: "Fecha de pago",
+                      as: :string,
+                      wrapper_html: { class: 'detail-item' },
+                      label_html: { class: 'label-bold' },
+                      input_html: {
+                        class: 'input-span',
+                        data: {
+                          payrolldates_target: "payDate",
+                          action: "change->payrolls-calculations#showFields",
+                          payrolls_calculations_target: "pay_date"} } %>
+
+
+    </div>
+
+
+    <!-- Sección: Ingresos -->
+    <div class="section-container ingresos d-none" data-payrolls-calculations-target="sectionContainer">
+      <div class="section-header">
+        <h5>Ingresos</h5>
+        <%= form.input :gross_pay, label: false,
+              input_html: {
+                class: 'input-span readonly-field',
+                readonly: true, data: { payrolls_calculations_target: "gross_pay" } } %>
+      </div>
+      <%= render "ingresos", form: form %>
+    </div>
+    <!-- Sección: Deducciones -->
+    <div class="section-container deducciones d-none" data-payrolls-calculations-target="sectionContainer">
+      <div class="section-header">
+        <h5>Deducciones</h5>
+        <%= form.input :total_deductions, label: false,
+            input_html: { class: 'input-span readonly-field', readonly: true, data: { payrolls_calculations_target: "total_deductions" } } %>
+      </div>
+      <%= render "deducciones", form: form %>
+    </div>
+
+    <!-- Sección: Pago Neto -->
+    <div class="section-container neto d-none" data-payrolls-calculations-target="sectionContainer">
+      <div class="section-header">
+        <h5>Pago Neto</h5>
+        <%= form.input :net_pay, label: false, input_html: { class: 'input-span readonly-field', readonly: true, data: { payrolls_calculations_target: "net_pay" } } %>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <%= link_to "Cancel", company_payrolls_path(@company), class: "btn btn-danger" %>
+      <%= form.button :submit, @payroll.new_record? ? "Crear Nomina" : "Actualizar Nomina",
+          class: "btn btn-primary d-none",
+          data: { payrolls_calculations_target: "sectionContainer" }
+          %>
+    </div>
+  <% end %>
+</div>

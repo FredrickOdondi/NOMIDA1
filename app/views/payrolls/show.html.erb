@@ -1,0 +1,10 @@
+<h1>Payroll Details</h1>
+
+<p><strong>Employee:</strong> <%= @payroll.employee.full_name %></p>
+<p><strong>Pay Date:</strong> <%= @payroll.pay_date.strftime('%d/%m/%Y') %></p>
+<p><strong>Net Pay:</strong> <%= number_to_currency(@payroll.net_pay) %></p>
+
+<!-- Include other relevant fields -->
+
+<%= link_to 'Edit', edit_company_payroll_path(@company, @payroll) %> |
+<%= link_to 'Back', company_payrolls_path(@company) %>

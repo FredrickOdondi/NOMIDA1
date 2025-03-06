@@ -1,0 +1,68 @@
+<section id="reportes-index">
+  <div class="view-options">
+    <h1>Reportes Generados</h1>
+
+    <!-- Filter options -->
+    <div class="search-bar" data-controller="payrolldates">
+        <%= form_with url: company_reports_path(@company), method: :get, local: true do %>
+
+          <%= select_tag :report_type, options_for_select([['Pagos de nomina', 'tipo_1'], ['Pagos de servicios prestados', 'tipo_2'], ['Vacaciones y enfermedad acumuladas', 'tipo_3']], params[:report_type]), prompt: 'Seleccione un tipo de reporte' %>
+          <%= label_tag :start_date, "Fecha de inicio" %>
+          <%= date_field_tag :start_date, params[:start_date], data: { payrolldates_target: "periodStart" } %>
+          <%= label_tag :end_date, "Fecha de fin" %>
+          <%= date_field_tag :end_date, params[:end_date], data: { payrolldates_target: "periodEnd" } %>
+          <%= submit_tag "Buscar", class: "btn btn-secondary" %>
+          <% if params[:report_type].present? || params[:end_date].present? || params[:end_date].present? %>
+            <%= link_to "Limpiar filtros", company_reports_path(@company), class: "btn btn-secondary" %>
+          <% end %>
+        <% end %>
+      </div>
+
+    <%= link_to "Crear reporte", new_company_report_path(@company), class: 'btn btn-primary' %>
+  </div>
+
+
+
+  <!--table details -->
+  <table>
+    <thead class="header-table">
+      <tr>
+        <th>N°</th>
+        <th>Fecha de reporte</th>
+        <th>Tipo de reporte</th>
+        <th>Filtros</th>
+        <th>Acciones</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <% @reports.order(created_at: :desc).each_with_index do |report, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= report.created_at %></td>
+          <td><%= report.type_name %></td>
+          <td><%= report.filters_formatted %></td>
+          <td>
+            <%= link_to "Imprimir reporte", download_report_path(report), class: "btn btn-primary" %>
+            <%= link_to "Borrar reporte", company_report_path(@company, report),
+                data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro de que desear eliminar este reporte?" },
+                class: "btn btn-danger btn-sm" %>
+
+          </td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @reports %>
+
+</section>
+
+<style>
+  #reportes-index {
+    padding-top: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+</style>

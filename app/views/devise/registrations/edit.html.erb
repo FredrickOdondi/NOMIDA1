@@ -1,0 +1,85 @@
+<div id="edit-user">
+  <div class="singUpCard">
+    <h2 class="loginTitle">Editar <%= resource_name.to_s.humanize %></h2>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.error_notification %>
+
+      <div class="signUpForm">
+        <%= f.input :first_name,
+                  label: "Primer nombre",
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "given-name" }%>
+
+        <%= f.input :middle_name,
+                    label: "Segundo nombre",
+                    required: true,
+                    autofocus: true,
+                    input_html: { autocomplete: "additional-name" }%>
+
+        <%= f.input :last_name,
+                    label: "Apellido paterno",
+                    required: true,
+                    autofocus: true,
+                    input_html: { autocomplete: "family-name" }%>
+
+        <%= f.input :last_name_2,
+                    label: "Apellido materno",
+                    required: true,
+                    autofocus: true,
+                    input_html: { autocomplete: "family-name" }%>
+
+        <%= f.input :birth_date,
+                    label: "Fecha de nacimiento",
+                    as: :string,
+                    required: true,
+                    autofocus: true,
+                    input_html: { data: { controller: "datepicker"} }%>
+
+        <div>
+          <% if resource.photo.key.present? %>
+            <%= cl_image_tag resource.photo.key, height: 250, width: 250, crop: :fill %>
+          <% end %>
+          <%= f.input :photo, as: :file, label: "Foto"  %>
+        </div>
+
+        <%= f.input :email, required: true, autofocus: true %>
+
+        <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+        <% end %>
+
+        <%= f.input :password,
+                    label: "Nueva Contraseña",
+                    hint: "Déjalo en blanco si no quieres cambiarlo.",
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :password_confirmation,
+                    label: "Confirma tu nueva Contraseña",
+                    required: false,
+                    input_html: { autocomplete: "new-password" } %>
+        <%= f.input :current_password,
+                    label: "Contraseña actual",
+                    hint: "Necesitamos tu contraseña actual para confirmar tus cambios",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Actualizar", class: "loginBtn" %>
+      </div>
+    <% end %>
+
+    <h3 >Cancelar mi cuenta</h3>
+
+    <div>Unhappy? <%= button_to "Cancelar mi cuenta", registration_path(resource_name),
+        data: {
+          confirm: "Are you sure?",
+          turbo_confirm: "Are you sure?" },
+        method: :delete,
+        class: "btn btn-danger" %></div>
+
+    <%= link_to "Back", :back %>
+  </div>
+
+</div>

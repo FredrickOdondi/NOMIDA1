@@ -1,0 +1,38 @@
+<section id="parameters-index">
+  <div class="view-options">
+    <h1>Parametros de la compañia <%= @company.name %></h1>
+    <%= link_to "Agregar Nuevo Parametro", new_company_parameter_path(@company), class: "btn btn-primary" %>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>N°</th>
+        <th>Parametro</th>
+        <th>Valor</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @parameters.each_with_index do |parameter, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= parameter.parameter_name %></td>
+          <td><%= parameter.parameter_value %></td>
+          <td>
+            <%= link_to "Editar", edit_company_parameter_path(@company, parameter) %>
+            <%= link_to "Eliminar", company_parameter_path(@company, parameter),
+                data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro de que desear eliminar este parametro?"},
+                class: "btn btn-danger btn-sm"
+                %>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
+
+
+</section>

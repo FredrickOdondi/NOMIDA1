@@ -1,0 +1,134 @@
+// Nueva paleta de colores
+$color-primary: #14ABFF; // Azul
+$color-secondary: #00DE82; // Verde claro
+$color-dark: #051245; // Azul oscuro
+$color-teal-dark: #03614D; // Verde oscuro
+$color-teal-light: #2BC294; // Verde más claro
+$color-white: #FFFFFF; // Blanco
+
+#login {
+  // background: linear-gradient(to bottom, $color-primary, $color-secondary);
+  height: 100vh;
+  padding-top: 5%;
+}
+
+#sign-up {
+  min-height: 100vh;
+  padding: 20px 0px;
+}
+
+#edit-user {
+  min-height: 100vh;
+  padding: 20px 0px;
+}
+#edit-profile {
+  background-color: $color-dark;
+  min-height: 100vh;
+  padding: 5% 0px;
+}
+
+/* For sign-up */
+.loginOptions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.loginOptions > * {
+  width: 45%;
+}
+
+.sign-up {
+  color: lighten($color-dark, 40%);
+}
+
+/* For log-in */
+.loginCard {
+  background-color: darken($color-primary, 20%);
+  width: 30%;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 2rem;
+}
+
+.singUpCard {
+  background-color: darken($color-primary, 20%);
+  width: 80%;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 2rem;
+
+}
+
+.singUpCard > h2 {
+
+  text-align: center;
+}
+
+.signUpForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.loginTitle {
+  color: $color-white;
+  text-align: center;
+}
+
+.loginForm {
+  color: $color-white;
+}
+
+.form-actions {
+  display: flex;
+  align-content: center;
+  margin-bottom: 1rem;
+}
+
+.loginBtn {
+  background-color: $color-primary;
+  border-radius: 0.7rem;
+  transition-duration: 0.4s;
+  margin: auto;
+  min-width: 30%;
+}
+
+.loginBtn:hover {
+  background-color: darken($color-primary, 10%);
+  color: $color-white;
+}
+
+.loginLinks {
+  display: flex;
+  width: 100%;
+  justify-content:center;
+  row-gap: 0.5rem;
+  column-gap: 8px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.loginLinks a {
+  color: #2BC294;
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 991px) {
+  .loginCard {
+    width: 50%;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  .loginCard {
+    width: 90%;
+  }
+
+  .signUpForm {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+}

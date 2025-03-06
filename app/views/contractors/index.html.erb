@@ -1,0 +1,79 @@
+<section id="contractors-index">
+
+  <div class="view-options">
+    <h1>Contratistas de <%= @company.name %></h1>
+
+    <div class="search-bar">
+      <%= form_with url: company_contractors_path(@company), method: :get, local: true do %>
+        <%= label_tag :search, "Buscar contratista:" %>
+        <%= text_field_tag :search, params[:search], placeholder: "Nombre del contratista" %>
+        <%= submit_tag "Buscar", class: "btn btn-secondary" %>
+        <% if params[:search].present? %>
+          <%= link_to "Limpiar filtros", company_contractors_path(@company), class: "btn btn-secondary" %>
+        <% end %>
+      <% end %>
+
+    </div>
+
+    <%= link_to "Crear nueva contratista", new_company_contractor_path(@company), class: "btn btn-primary" %>
+  </div>
+
+
+
+  <table>
+  <thead class="header-table">
+    <tr>
+      <th>N°</th>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Seguro Social / EIN</th>
+      <th>Dirección</th>
+      <th>Teléfono</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contractors.each_with_index do |contractor, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <!-- Combine first_name and last_name for full name -->
+        <td><%= [contractor.first_name, contractor.last_name].compact.join(' ') %></td>
+
+        <td><%= contractor.contractor_type %></td>
+
+        <td><%= contractor.social_security_ein %></td>
+
+        <!-- Display full address by combining address fields -->
+        <td><%= [contractor.address_line, contractor.city, contractor.country, contractor.zip_code].compact.join(', ') %></td>
+
+        <td><%= contractor.phone_number %></td>
+
+        <td class="actions-table">
+          <%= link_to "Ver", company_contractor_path(@company, contractor), class: "btn btn-primary"  %>
+          <%= link_to "Editar",  edit_company_contractor_path(@company, contractor), class: "btn btn-primary"%>
+          <%= link_to "Eliminar", company_contractor_path(@company, contractor),
+                  data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro de que deseas eliminar este contratista?"}, class: "btn btn-danger btn-sm"  %>
+
+
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @contractors %>
+
+
+
+</section>
+
+
+ <style>
+
+
+    #contractors-index {
+      /* background: linear-gradient(to bottom, #14ABFF, #00DE82); */
+
+      padding: 2rem;
+    }
+ </style>

@@ -1,0 +1,80 @@
+<section id="payrolls-index">
+  <div class="view-options">
+    <% if @employee %>
+      <h1>Nomina de <%= @employee.full_name %></h1>
+      <%= link_to 'Create nomina', new_company_employee_payroll_path(@company, @employee), class: 'btn btn-primary' %>
+    <% else %>
+      <h1>Nomina de <%= @company.name %></h1>
+
+      <!-- Filter options-->
+      <div class="search-bar" data-controller="payrolldates">
+        <%= form_with url: company_payrolls_path(@company), method: :get, local: true do %>
+          <%= label_tag :search, "Empleado" %>
+          <%= text_field_tag :search, params[:search], placeholder: "Nombre del empleado" %>
+          <%= label_tag :start_date, "Fecha de inicio" %>
+          <%= date_field_tag :start_date, params[:start_date], data: { payrolldates_target: "periodStart" } %>
+          <%= label_tag :end_date, "Fecha de fin" %>
+          <%= date_field_tag :end_date, params[:end_date], data: { payrolldates_target: "periodEnd" }  %>
+          <%= submit_tag "Buscar", class: "btn btn-secondary" %>
+          <% if params[:search].present? || params[:start_date].present? || params[:end_date].present? %>
+            <%= link_to "Limpiar filtros", company_payrolls_path(@company), class: "btn btn-secondary" %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= link_to 'Crear nomina', new_company_payroll_path(@company), class: 'btn btn-primary' %>
+    <% end %>
+
+  </div>
+
+  <!--table details -->
+
+  <table>
+    <thead class="header-table">
+      <tr>
+        <th>N°</th>
+        <th>Fecha de pago</th>
+        <th>Nombre</th>
+        <th>Pago Bruto</th>
+        <th>Deducciones</th>
+        <th>Pago Neto</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @payrolls.order(created_at: :desc).each_with_index  do |payroll, index| %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= payroll.pay_date %></td>
+          <td><%= link_to payroll.employee.full_name, company_employee_path(@company, payroll.employee) %></td>
+          <td><%= payroll.gross_pay %></td>
+          <td><%= payroll.total_deductions %></td>
+          <td><%= payroll.net_pay %></td>
+          <td>
+            <%= link_to "Imprimir", company_payroll_path(@company, payroll, format: :pdf), class: "btn btn-primary" %>
+            <%= link_to "Editar", edit_company_payroll_path(@company, payroll), class: "btn btn-primary" %>
+            <%= link_to "Eliminar", company_payroll_path(@company, payroll),
+                data: {turbo_method: :delete, turbo_confirm: "¿Estás seguro de que desear eliminar esta nomina?"},
+                class: "btn btn-danger btn-sm"
+                %>
+
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @payrolls %>
+
+
+</section>
+
+
+<style>
+  #payrolls-index {
+    /* background: linear-gradient(to bottom, #14ABFF, #00DE82); */
+
+    padding: 2rem;
+  }
+
+</style>

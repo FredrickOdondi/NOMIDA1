@@ -1,0 +1,182 @@
+
+<!-- Hours Fields -->
+<div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5> Horas </h5>
+  </div>
+  <div class="fields-group-payroll">
+    <%= form.input :regular_hours,
+              label: "Horas Regulares:",
+              wrapper_html: { class: 'payrolls-inputs-wraps' },
+              label_html: { class: 'payrolls-label-span' },
+              input_html: {
+                class: 'payrolls-inputs-span',
+                type: "number",
+                min: 0,
+                step:1,
+                value: form.object.regular_hours || 0,
+                data: { payrolls_calculations_target: "regular_hours", action: "change->payrolls-calculations#updateValues" }
+              } %>
+
+    <%= form.input :vacation_hours,
+                  label: "Horas de Vacaciones:",
+                  wrapper_html: { class: 'payrolls-inputs-wraps' },
+                  label_html: { class: 'payrolls-label-span' },
+                  input_html: {
+                    class: 'payrolls-inputs-span',
+                    type: "number",
+                    min: 0,
+                    step: 1,
+                    value: form.object.vacation_hours ||  0,
+                    data: { payrolls_calculations_target: "vacation_hours", action: "change->payrolls-calculations#updateValues" }
+                  } %>
+
+    <%= form.input :sick_hours,
+                  label: "Horas de Enfermedad:",
+                  wrapper_html: { class: 'payrolls-inputs-wraps' },
+                  label_html: { class: 'payrolls-label-span' },
+                  input_html: {
+                    class: 'payrolls-inputs-span',
+                    type: "number",
+                    min: 0,
+                    step: 1,
+                    value: form.object.sick_hours || 0,
+                    data: { payrolls_calculations_target: "sick_hours", action: "change->payrolls-calculations#updateValues" }
+                  } %>
+
+    <%= form.input :overtime_hours,
+                  label: "Horas Extras:",
+                  wrapper_html: { class: 'payrolls-inputs-wraps' },
+                  label_html: { class: 'payrolls-label-span' },
+                  input_html: {
+                    class: 'payrolls-inputs-span',
+                    type: "number",
+                    min: 0,
+                    step: 1,
+                    value: form.object.overtime_hours || 0,
+                    data: { payrolls_calculations_target: "overtime_hours", action: "change->payrolls-calculations#updateValues" }
+                  } %>
+  </div>
+  <div class="fields-total">
+    <h5 data-payrolls-calculations-target="totalHours">Total de horas: </h5>
+  </div>
+</div>
+
+<!-- Salaries Fields -->
+<div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5> Salarios </h5>
+  </div>
+  <div class="fields-group-payroll">
+    <%= form.input :hourly_rate,
+          label: "Salario por Hora:",
+          wrapper_html: { class: 'payrolls-inputs-wraps' },
+          label_html: { class: 'payrolls-label-span' },
+          input_html: {
+            id: "payroll_hourly_rate",
+            class: "payrolls-inputs-span",
+            value: form.object.hourly_rate || 0,
+            data: { payrolls_calculations_target: "hourlyRate", action: "change->payrolls-calculations#updateValues" }
+          } %>
+
+    <%= form.input :total_salaries, label: "Salarios:",
+                wrapper_html: { class: 'payrolls-inputs-wraps' },
+                label_html: { class: 'payrolls-label-span' },
+                input_html: {
+                  class: 'payrolls-inputs-span readonly-field',
+                  readonly: true,
+                  data: { payrolls_calculations_target: "total_salaries", action: "change->payrolls-calculations#updateValues"} } %>
+
+    <%= form.input :fixed_salary,
+                  label: "Sueldo Fijo:",
+                  wrapper_html: { class: 'payrolls-inputs-wraps' },
+                  label_html: { class: 'payrolls-label-span' },
+                  input_html: {
+                    class: "payrolls-inputs-span",
+                    value: form.object.fixed_salary || 0,
+                    data: { payrolls_calculations_target: "fixedSalary", action: "change->payrolls-calculations#updateValues" }
+                  } %>
+  </div>
+  <div class="fields-total">
+    <h5 data-payrolls-calculations-target="totalSalary"></h5>
+  </div>
+</div>
+
+<!-- Special Payments -->
+<div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5> Pagos especiales </h5>
+  </div>
+  <div class="fields-group-payroll">
+    <%= form.input :tips, label: "Propinas:",
+            wrapper_html: { class: 'payrolls-inputs-wraps' },
+            label_html: { class: 'payrolls-label-span' },
+            input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "tips", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :commissions,
+            label: "Comisiones:",
+            wrapper_html: { class: 'payrolls-inputs-wraps' },
+            label_html: { class: 'payrolls-label-span' },
+            input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "commissions", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :bonuses,
+            label: "Bonos:",
+            wrapper_html: { class: 'payrolls-inputs-wraps' },
+            label_html: { class: 'payrolls-label-span' },
+            input_html: { class: 'payrolls-inputs-span',
+          data: { payrolls_calculations_target: "bonuses", action: "change->payrolls-calculations#updateValues"} } %>
+  </div>
+  <div class="fields-total">
+    <h5 data-payrolls-calculations-target="totalSpecialPayments"></h5>
+  </div>
+</div>
+
+<!-- Others payments subject to contributions -->
+<div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5>Otros Pagos Sujetos a Contribuciones</h5>
+  </div>
+  <div class="fields-group-payroll">
+    <%= form.input :other_payments_subject_to_contribution,
+          label: "Monto 1:",
+          wrapper_html: { class: 'payrolls-inputs-wraps' },
+          label_html: { class: 'payrolls-label-span' },
+          input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "other_payments_subject_to_contribution", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :other_payments_subject_to_contribution_2,
+            label: "Monto 2:",
+            wrapper_html: { class: 'payrolls-inputs-wraps' },
+            label_html: { class: 'payrolls-label-span' },
+            input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "other_payments_subject_to_contribution_2", action: "change->payrolls-calculations#updateValues"} } %>
+
+  </div>
+  <div class="fields-total">
+    <h5 data-payrolls-calculations-target="totalOtherPayments">Total: </h5>
+  </div>
+</div>
+
+<!-- Others payments subject to contributions -->
+ <div class="payroll-group-card">
+  <div class="group-payroll-title">
+    <h5>Otros Pagos NO sujetos a contribuciones</h5>
+  </div>
+  <div class="fields-group-payroll">
+    <%= form.input :expense_reimbursement,
+        label: "Rembolso de gastos:",
+        wrapper_html: { class: 'payrolls-inputs-wraps' },
+        label_html: { class: 'payrolls-label-span' },
+        input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "expense_reimbursement", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :allowances,
+            label: "Allowances:",
+            wrapper_html: { class: 'payrolls-inputs-wraps' },
+            label_html: { class: 'payrolls-label-span' },
+            input_html: { class: 'payrolls-inputs-span', data: { payrolls_calculations_target: "allowances", action: "change->payrolls-calculations#updateValues"} } %>
+    <%= form.input :other_payments_not_subject_to_retention,
+            label: "Otros Pagos no sujetos a retenciones:",
+            wrapper_html: { class: 'payrolls-inputs-wraps' },
+            label_html: { class: 'payrolls-label-span' },
+            input_html: { class: 'payrolls-inputs-span',
+              data: { payrolls_calculations_target: "other_payments_not_subject_to_retention", action: "change->payrolls-calculations#updateValues"} } %>
+
+  </div>
+  <div class="fields-total">
+    <h5 data-payrolls-calculations-target="totalOtherPaymentsNotSubjectToContribution">Total: </h5>
+  </div>
+</div>

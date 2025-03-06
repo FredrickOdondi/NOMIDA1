@@ -1,0 +1,158 @@
+<section id="contractors-show">
+  <div class="actions">
+    <%= link_to "Editar", edit_company_contractor_path(@company, @contractor) %>
+    <%= button_to "Eliminar", company_contractor_path(@contractor), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta compañía?" }, form_class: "delete-form" %>
+    <a href="<%= company_contractors_path(@company) %>">Volver a la Lista</a>
+  </div>
+
+  <div class="details-container">
+    <div class="title-item">
+      <h5>Detalles del contratista</h5>
+    </div>
+
+    <div class="detail-item">
+      <strong>Nombre del contratista:</strong>
+      <span><%= @contractor.first_name %></span>
+    </div>
+    
+    <div class="detail-item">
+      <strong>Tipo de contratista:</strong>
+      <span><%= @contractor.contractor_type %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Seguro Social (EIN):</strong>
+      <span><%= @contractor.social_security_ein %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Dirección:</strong>
+      <span><%= @contractor.address_line %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Ciudad:</strong>
+      <span><%= @contractor.city %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>País:</strong>
+      <span><%= @contractor.country %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Código Postal:</strong>
+      <span><%= @contractor.zip_code %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Teléfono:</strong>
+      <span><%= @contractor.phone_number %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Fecha de Creación:</strong>
+      <span><%= @contractor.created_at.strftime("%d/%m/%Y") %></span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Última Actualización:</strong>
+      <span><%= @contractor.updated_at.strftime("%d/%m/%Y") %></span>
+    </div>
+  </div>
+
+
+
+</section>
+
+<style>
+
+  /* Todos los show tendran el mismo estilo */
+
+    #contractors-show {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 1.5rem;
+    }
+
+
+
+    .details-container {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      column-gap: 1%;
+      width: 100%;
+    }
+
+    .detail-item {
+      min-width: 48.5%;
+      margin-bottom: 8px;
+      display: flex;
+
+    }
+
+    .detail-item strong {
+      width: 30%;
+
+    }
+
+    .detail-item span {
+      width: 69%;
+      text-wrap: wrap;
+      overflow-wrap: break-word;
+    }
+
+    .title-item {
+      width: 100%;
+      color: #00DE82;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 16px;
+    }
+
+    .detail-item strong {
+      display: block;
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .actions {
+
+      display: flex;
+      gap: 10px;
+    }
+
+    .actions a, .actions form button {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .actions a {
+      background-color: #1a73e8;
+    }
+
+    .actions a:hover {
+      background-color: #155cb0;
+    }
+
+    .actions form button {
+      background-color: #e53935;
+    }
+
+    .actions form button:hover {
+      background-color: #c62828;
+    }
+  </style>

@@ -1,0 +1,64 @@
+h1 {
+  color: #14ABFF;
+}
+
+.button {
+  background-color: #1a73e8;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.button:hover {
+  background-color: #155cb0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table, th, td {
+  border: 1px solid #2BC294;
+}
+
+th, td {
+  padding: 6px;
+  text-align: center;
+}
+
+.header-table{
+  background-color: #051245;
+  color: white;
+}
+
+
+.actions-table {
+  display: flex;
+  gap: 5px;
+  height: 100%;
+}
+
+.actions-table a, .actions-table form button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  .hideable-column {
+    display: none;
+  }
+
+}

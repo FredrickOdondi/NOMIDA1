@@ -1,0 +1,283 @@
+<div class="form-container" data-controller="service-payment-calculations">
+  <%= simple_form_for([company, contractor, service_payment], html: { class: 'details-container', local: true }) do |f| %>
+    <div class="title-item">
+      <h5>Crear Nuevo Pago de Servicio</h5>
+    </div>
+
+    <!-- Sección: Selección de Contratista -->
+    <div class="payroll-dates-card" data-controller="payrolldates">
+      <%= f.input :contractor_id,
+                  collection: contractors.order(first_name: :asc),
+                  label: "Contratistas",
+                  prompt: "Seleccione un contratista",
+                  as: :select,
+                  value_method: :id,
+                  label_method: :full_name,
+                  wrapper_html: { class: 'detail-item' },
+                  label_html: { class: 'label-bold' },
+                  input_html: { class: 'input-span' } %>
+      <%= f.input :payment_method,
+              collection: ["Transferencia", "Cheque", "Efectivo", "Otro"],
+              label: "Método de Pago",
+              prompt: "Seleccionar Método de Pago",
+              as: :select,
+              wrapper_html: { class: 'detail-item' },
+              label_html: { class: 'label-bold' },
+              input_html: {
+                class: 'input-span',
+                data: {
+                  action: "change->payrolls-calculations#showFields",
+                  payrolls_calculations_target: "paymentMethod"
+
+                } } %>
+
+      <%= f.input :period_start, label: "Fecha de Inicio",
+                        as: :string,
+                        wrapper_html: { class: 'detail-item' },
+                        label_html: { class: 'label-bold' },
+                        input_html: {
+                          class: 'input-span',
+                          data: {
+                            payrolldates_target: "periodStart",
+                            action: "change->payrolldates#updatePeriodEndMinDate",
+                            action: "change->payrolls-calculations#showFields",
+                            payrolls_calculations_target: "period_start"
+                                  } } %>
+
+        <%= f.input :period_end, label: "Fecha de Fin",
+                        as: :string,
+                        wrapper_html: { class: 'detail-item' },
+                        label_html: { class: 'label-bold' },
+                        input_html: {
+                          class: 'input-span',
+                          data: {
+                            payrolldates_target: "periodEnd",
+                            action: "change->payrolls-calculations#showFields",
+                            payrolls_calculations_target: "period_end"
+                                  } } %>
+
+
+      <%= f.input :payment_date, label: "Fecha de pago",
+                  as: :string,
+                  wrapper_html: { class: 'detail-item' },
+                  label_html: { class: 'label-bold' },
+                  input_html: {
+                    class: 'input-span',
+                    data: {
+                          payrolldates_target: "payDate",
+                          action: "change->payrolls-calculations#showFields",
+                          payrolls_calculations_target: "pay_date"}} %>
+    </div>
+
+    <!-- Sección: Cantidades -->
+    <div class="section-container">
+      <div class="section-header">
+        <h5>Detalles de Pago</h5>
+      </div>
+      <div class="services-group">
+        <div class="grid-services">
+          <%= f.input :paid_to_individuals_no_retention,
+                    label: "Pagos a individuales no sujetos a retención",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    placeholder: "0",
+                    label_html: { class: 'service-label-span' },
+                    input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                    data: {
+                        service_payment_calculations_target: "paidToIndividualsNoRetention",
+                        action: "change->service-payment-calculations#servicePaymentCalculations"
+                      } } %>
+        </div>
+        <div class="grid-services">
+          <%= f.input :paid_to_corporation_no_retention,
+                      label: "Pago a corporaciones no sujetas a retención",
+                      placeholder: "0",
+                      wrapper_html: { class: 'service-inputs-wraps' },
+                      label_html: { class: 'service-label-span' },
+                      input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                      data: {
+                          service_payment_calculations_target: "paidToCorporationNoRetention",
+                          action: "change->service-payment-calculations#servicePaymentCalculations"
+                        } } %>
+        </div>
+
+        <!--- Block retention to individuals -->
+        <div class="grid-services">
+          <%= f.input :paid_to_individuals_with_retention,
+                    label: "Pago a individuales sujetos a retención",
+                    placeholder: "0",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    label_html: { class: 'service-label-span' },
+                    input_html: { class: 'service-inputs-span',
+                    data: {
+                        service_payment_calculations_target: "paidToIndividualsWithRetention",
+                        action: "change->service-payment-calculations#servicePaymentCalculations"
+                      } } %>
+
+          <%= f.input :retention_percentage_individuals,
+                      label: "% de retención a individuales",
+                      collection: [["0%", 0], ["4%", 4], ["6%", 6], ["8%", 8], ["10%", 10], ["15%", 15], ["20%", 20]],
+                      selected: 0,
+                      wrapper_html: { class: 'service-inputs-wraps' },
+                      label_html: { class: 'service-label-span' },
+                      input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                      data: {
+                          service_payment_calculations_target: "retentionPercentageIndividuals",
+                          action: "change->service-payment-calculations#servicePaymentCalculations"
+                        } } %>
+
+          <%= f.input :retention_individuals,
+                      label: "Retención a individuales",
+                      placeholder: "0",
+                      wrapper_html: { class: 'service-inputs-wraps' },
+                      label_html: { class: 'service-label-span' },
+                      input_html: {
+                        class: 'service-inputs-span readonly-field',
+                        readonly: true,
+                        data: { service_payment_calculations_target: "retentionIndividuals" } } %>
+        </div>
+
+
+        <!--- Block retention to corporations -->
+        <div class="grid-services">
+          <%= f.input :paid_to_corporation_with_retention,
+                    label: "Pago a corporaciones sujetas a retención",
+                    placeholder: "0",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    label_html: { class: 'service-label-span' },
+                      input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                    data: {
+                        service_payment_calculations_target: "paidToCorporationWithRetention",
+                        action: "change->service-payment-calculations#servicePaymentCalculations"
+                      } } %>
+
+          <%= f.input :retention_percentage_corporations,
+                      label: "% de retención a corporaciones",
+                      collection: [["0%", 0], ["4%", 4], ["6%", 6], ["8%", 8], ["10%", 10], ["15%", 15], ["20%", 20]],
+                      selected: 0,
+                      wrapper_html: { class: 'service-inputs-wraps' },
+                      label_html: { class: 'service-label-span' },
+                      input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                      data: {
+                          service_payment_calculations_target: "retentionPercentageCorporation",
+                          action: "change->service-payment-calculations#servicePaymentCalculations"
+                        } } %>
+          <%= f.input :retention_corporations,
+                      label: "Retención a coroporaciones",
+                      placeholder: "0",
+                      wrapper_html: { class: 'service-inputs-wraps' },
+                      label_html: { class: 'service-label-span' },
+                      input_html: {
+                        class: 'service-inputs-span readonly-field',
+                        readonly: true,
+                        data: { service_payment_calculations_target: "retentionCorporation" } } %>
+        </div>
+        <div class="grid-services">
+          <%= f.input :reimbursed_expenses,
+                    label: "Gastos Reembolsados",
+                    placeholder: "0",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    label_html: { class: 'service-label-span' },
+                      input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                    data: {
+                        service_payment_calculations_target: "reimbursedExpenses",
+                        action: "change->service-payment-calculations#servicePaymentCalculations"
+                      } } %>
+        </div>
+
+        <div class="grid-services">
+          <%= f.input :responsibility_payment_health_providers,
+                    label: "Responsabilidad de pago a proveedores de salud",
+                    placeholder: "0",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    label_html: { class: 'service-label-span' },
+                      input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                    data: {
+                        service_payment_calculations_target: "responsibilityPaymentHealthProviders",
+                        action: "change->service-payment-calculations#servicePaymentCalculations"
+                      } } %>
+        </div>
+
+        <div class="grid-services">
+          <%= f.input :special_contribution_services,
+                    label: "Aportación especial por Servicio Profesionales y Consultivos bajo la Ley 48-2013",
+                    placeholder: "0",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    label_html: { class: 'service-label-span' },
+                      input_html: { class: 'service-inputs-span', type: "number", step: 1, min: 0,
+                    data: {
+                        service_payment_calculations_target: "specialContributionServices",
+                        action: "change->service-payment-calculations#servicePaymentCalculations"
+                      } } %>
+        </div>
+
+
+        <!--- Block gross, deduction and net amount -->
+        <div class="grid-services">
+          <%= f.input :gross_amount,
+                    label: "Monto Bruto",
+                    placeholder: "0",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    label_html: { class: 'service-label-span' },
+                    input_html: { class: 'service-inputs-span readonly-field', readonly: true,
+                      data: { service_payment_calculations_target: "grossAmount" } } %>
+          <div></div>
+           <%= f.input :deduction_amount,
+                    label: "Monto de Deducción",
+                    placeholder: "0",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    label_html: { class: 'service-label-span' },
+                    input_html: { class: 'service-inputs-span readonly-field', readonly: true,
+                    data: {
+                        service_payment_calculations_target: "deductionAmount",
+                        action: "change->service-payment-calculations#servicePaymentCalculations"
+                      }  } %>
+
+          <%= f.input :net_amount,
+                    label: "Monto Neto",
+                    wrapper_html: { class: 'service-inputs-wraps' },
+                    placeholder: "0",
+                    label_html: { class: 'service-label-span' },
+                    input_html: { class: 'service-inputs-span readonly-field', readonly: true,
+                      data: { service_payment_calculations_target: "netAmount" } } %>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Botón de Envío -->
+    <div class="button-group title-item">
+      <%= link_to "Cancelar",  company_service_payments_path(company), class: "btn btn-danger" %>
+      <%= f.button :submit, service_payment.new_record? ? "Crear Servicio Prestado": "Actualizar servicio prestado", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  .form-container {
+
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .title-item h5 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .section-header h5 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+
+
+  .readonly-field {
+    background: #e9ecef;
+    color: #6c757d;
+    cursor: not-allowed;
+  }
+
+</style>

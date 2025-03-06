@@ -1,0 +1,218 @@
+<section id="companies-show">
+
+
+  <div class="actions">
+    <%= link_to "Editar", edit_company_path(@company) %>
+
+    <%= button_to "Eliminar", company_path(@company), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta compañía?" }, form_class: "delete-form" %>
+    <%= link_to "Listado de compañias", companies_path %>
+    <%= link_to "Configurar parametros",   company_parameters_path(@company) %>
+    <%= link_to "Configurar Reportes", company_report_configurations_path(@company) %>
+
+  </div>
+
+
+<div class="details-container">
+  <div class="title-item">
+    <h5> Detalles de la compañia </h5>
+  </div>
+
+  <div class="row w-100">
+    <div class="col-md-6 col-sm-12">
+      <div class="detail-item">
+        <strong>Nombre de la Compañía:</strong>
+        <span><%= @company.name %></span>
+      </div>
+      <div class="detail-item">
+        <strong>Tipo de Entidad:</strong>
+        <span><%= @company.entity_type %></span>
+      </div>
+      <div class="detail-item">
+        <strong>EIN/SS:</strong>
+        <span><%= @company.ein_ss %></span>
+      </div>
+      <div class="detail-item">
+        <strong>Número Patronal Estatal:</strong>
+        <span><%= @company.state_employer_number %></span>
+      </div>
+      <div class="detail-item">
+        <strong>Número de Registro de Comerciante:</strong>
+        <span><%= @company.merchant_registration_number %></span>
+      </div>
+      <div class="detail-item">
+        <strong>Fecha de Comienzo:</strong>
+        <span><%= @company.start_date.strftime('%m/%d/%Y') if @company.start_date %></span>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <% if @company.photo.key.present? %>
+        <%= cl_image_tag @company.photo.key, height: 250, width: 250, crop: :fill %>
+      <% else %>
+        <%= image_tag "250.jpg" , height: 250, width: 250 %>
+      <% end %>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="title-item">
+    <h5> Información de dirección </h5>
+  </div>
+  <div class="detail-item">
+      <strong>Dirección Postal / Ciudad / Pais / ZIP :</strong>
+      <span><%= @company.postal_address %> / <%= @company.postal_city %> / <%= @company.postal_country %> / <%= @company.postal_zip_code %></span>
+    </div>
+
+  <div class="detail-item">
+    <strong>Dirección Física / Ciudad / Pais / ZIP :</strong>
+    <span><%= @company.physical_address %> / <%= @company.physical_city %> / <%= @company.physical_country %> / <%= @company.physical_zip_code %></span>
+  </div>
+  <div class="detail-item">
+    <strong>¿Dirección Física igual a la Postal?</strong>
+    <span><%= @company.same_as_postal ? "Sí" : "No" %></span>
+  </div>
+
+  <div class="detail-item">
+    <strong>Código de empleo:</strong>
+    <span><%= @company.employment_code %></span>
+
+  </div>
+
+  <div class="detail-item">
+    <strong>Empleador:</strong>
+    <span><%= @company.employer %></span>
+  </div>
+
+  <div class="detail-item">
+    <strong>Payer/Pagador:</strong>
+    <span><%= @company.payer %></span>
+  </div>
+
+  <div class="detail-item">
+    <strong>Jurisdicción:</strong>
+    <span><%= @company.jurisdiction %></span>
+  </div>
+
+
+  <div class="title-item">
+    <h5> Información de contacto </h5>
+  </div>
+
+  <div class="detail-item">
+    <strong>Persona de Contacto:</strong>
+    <span><%= @company.contact_person %></span>
+  </div>
+  <div class="detail-item">
+    <strong>Número de Teléfono (Contacto):</strong>
+    <span><%= @company.contact_phone %></span>
+  </div>
+  <div class="detail-item">
+    <strong>Email (Contacto):</strong>
+    <span><%= @company.contact_email %></span>
+  </div>
+
+  <div class="detail-item">
+    <strong>Website:</strong>
+    <span><%= @company.website %></span>
+  </div>
+</div>
+
+
+
+</section>
+
+
+
+<style>
+
+    #companies-show {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+
+
+    .details-container {
+      display: flex;
+      flex-wrap: wrap;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      column-gap: 1%;
+      width: 100%;
+    }
+
+    .detail-item {
+      min-width: 48.5%;
+      margin-bottom: 8px;
+      display: flex;
+
+    }
+
+    .detail-item strong {
+      width: 30%;
+
+    }
+
+    .detail-item span {
+      width: 69%;
+      text-wrap: wrap;
+      overflow-wrap: break-word;
+    }
+
+    .title-item {
+      width: 100%;
+      color: #00DE82;
+      font-weight: bold;
+      font-size: 1.2rem;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 16px;
+    }
+
+    .detail-item strong {
+      display: block;
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .actions {
+
+      display: flex;
+      gap: 10px;
+    }
+
+    .actions a, .actions form button {
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .actions a {
+      background-color: #1a73e8;
+    }
+
+    .actions a:hover {
+      background-color: #155cb0;
+    }
+
+    .actions form button {
+      background-color: #e53935;
+    }
+
+    .actions form button:hover {
+      background-color: #c62828;
+    }
+  </style>

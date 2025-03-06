@@ -1,0 +1,167 @@
+<div class="form-container">
+  <%= simple_form_for(@company, html: { class: 'details-container', local: true }) do |form| %>
+
+    <div class="title-item">
+      <h5> Detalles de la compañía </h5>
+    </div>
+
+    <%= form.input :name, label: "Nombre de la Compañía", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :entity_type, label: "Tipo de Entidad",
+              collection: [["Corporación", "Corporación"], ["Individuo", "Individuo"]],
+              prompt: "Seleccione una opción", wrapper_html: { class: 'detail-item' },
+              label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :ein_ss, label: "EIN/SS", as: :integer, maxlength: 9, wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :state_employer_number, label: "Número Patronal Estatal", as: :integer, maxlength: 10, wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :merchant_registration_number, label: "Número de Registro de Comerciante", as: :integer, maxlength: 11, wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :start_date,
+      label: "Fecha de Comienzo",
+      as: :string, start_year: 1900,
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: {
+        class: 'input-span',
+        data: { controller: "datepicker"} } %>
+
+    <%= form.input :employment_code,
+      label: "Código de empleo",
+      collection: [
+        "Agrícola, Modelo 943",
+        "Composición Familiar, Anejo H",
+        "Contribuciones Medicare Empleado Gubernamental Calificado, Formulario 941",
+        "Ferroviarios CT-1",
+        "Militares, Formulario 941",
+        "Regular (todos los demás) Formulario 941",
+        "Regular, Modelo 944"
+      ],
+      prompt: "Seleccione una opción",
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: { class: 'input-span' }
+    %>
+
+    <%= form.input :employer,
+        label: "Empleador",
+        collection: [
+          "Federal Government",
+          "State and Local Gov",
+          "Tax Exempt Employee",
+          "State and Local Tax",
+          "None Apply"
+        ],
+        prompt: "Select an option",
+        wrapper_html: { class: 'detail-item' },
+        label_html: { class: 'label-bold' },
+        input_html: { class: 'input-span' }
+      %>
+
+    <%= form.input :payer,
+      label: "Payer/Pagador",
+      collection: [
+        "941-PR",
+        "943-PR",
+        "944-PR",
+        "Doméstico",
+        "Comp. por enferm.",
+        "Sólo empleados Med."
+      ],
+      prompt: "Seleccione una opción",
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: { class: 'input-span' }
+    %>
+
+    <%= form.input :jurisdiction,
+      label: "Jurisdicción",
+      collection: [
+        "N = Northern Mariana",
+        "S = American Samoa",
+        "V = Virgin Islands",
+        "P = Puerto Rico",
+        "G = Guam"
+      ],
+      prompt: "Seleccione una opción",
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: { class: 'input-span' }
+    %>
+
+
+
+
+
+
+    <div class="title-item">
+      <h5> Información de dirección </h5>
+    </div>
+
+    <%= form.input :postal_address, label: "Dirección Postal", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :postal_city, label: "Ciudad (Postal)", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :postal_country, label: "País (Postal)", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :postal_zip_code, label: "Código Postal", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :physical_address, label: "Dirección Física", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :physical_city, label: "Ciudad (Física)", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :physical_country, label: "País (Física)", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :physical_zip_code, label: "Código Postal (Física)", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :same_as_postal, label: "¿Dirección Física igual a la Postal?", as: :boolean, wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' } %>
+
+    <div class="title-item">
+      <h5> Información de contacto </h5>
+    </div>
+
+    <%= form.input :contact_person, label: "Persona de Contacto", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :contact_phone, label: "Número de Teléfono (Contacto)", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :contact_email, label: "Email (Contacto)", as: :email, wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= form.input :website, label: "Website", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+
+    <div class="col-md-6 col-sm-12 d-flex flex-wrap">
+      <% if @company.photo.key.present? %>
+        <%= cl_image_tag @company.photo.key, height: 250, width: 250, crop: :fill %>
+      <% end %>
+
+      <%= form.input :photo, label: "Foto", as: :file, wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span special-height' } %>
+    </div>
+
+
+    <div class="button-group title-item">
+      <%= link_to "Cancelar", companies_path, class: "btn btn-danger" %>
+      <%= form.button :submit, @company.new_record? ? "Crear Compañía" :  "Actualizar Compañia", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+
+
+<style>
+
+  #companies-show {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 2rem;
+  }
+
+  .special-height {
+    max-height: 45px;
+  }
+
+
+
+</style>

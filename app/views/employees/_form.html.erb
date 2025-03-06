@@ -1,0 +1,97 @@
+<div class="form-container">
+
+  <%= simple_form_for([company, employee], html: { class: 'details-container', local: true, data: { controller: "payrolldates" } }) do |f| %>
+    <div class="title-item">
+      <h5>Crear Nuevo Empleado</h5>
+    </div>
+
+    <%= f.input :first_name, label: "Primer nombre", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :middle_name, label: "Segundo nombre", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :last_name, label: "Apellido paterno", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :last_name_2, label: "Apellido materno", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= f.input :social_security, label: "Seguro Social", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :birth_date,
+      label: "Fecha de Nacimiento",
+      as: :string,
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: {
+                      class: 'input-span',
+                      data: { controller: "datepicker"} } %>
+    <%= f.input :start_date,
+      label: "Fecha de Inicio",
+      as: :string,
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: {
+                      class: 'input-span',
+                      data: { payrolldates_target: "periodStart",
+                            action: "change->payrolldates#updatePeriodEndMinDate"} } %>
+    <%= f.input :termination_date,
+      label: "Fecha de Terminación",
+      as: :string,
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: {
+                      class: 'input-span',
+                      data: { payrolldates_target: "periodEnd"} } %>
+
+    <%= f.input :phone_number, label: "Teléfono Fijo", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :mobile_phone, label: "Teléfono Móvil", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :email, label: "Correo Electrónico", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= f.input :hourly_rate, label: "Tarifa por Hora", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' } %>
+    <%= f.input :fixed_salary, label: "Salario fijo", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' } %>
+
+
+    <%= f.input :employee_number,
+      label: "Número de Empleado",
+      wrapper_html: { class: 'detail-item' },
+      label_html: { class: 'label-bold' },
+      input_html: { class: 'input-span' } %>
+    <%= f.input :license_number, label: "Número de Licencia", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= f.input :is_driver, label: "Es Conductor", as: :boolean, wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' } %>
+
+    <%= f.input :address_line, label: "Dirección", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :city, label: "Ciudad", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :country, label: "País", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :zip_code, label: "Código Postal", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= f.input :genre, label: "Género",
+      prompt: "Seleccione una opción",
+      collection: [["Masculino", "Masculino"], ["Femenino", "Femenino"], ["Prefiero no decirlo", "Prefiero no decirlo"]],
+      wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :employ, label: "Cargo", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= f.input :status, label: "Estado",
+      prompt: "Seleccione una opción",
+      collection: [["Soltero", "Soltero"], ["Casado", "Casado"], ["Divorciado", "Divorciado"], ["Viudo", "Viudo"]],
+      wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+    <%= f.input :initial_acum_vacation_hours,
+                label: "Inicial horas de vaciones acumuladas",
+                wrapper_html: { class: 'detail-item' },
+                label_html: { class: 'label-bold' },
+                input_html: { class: 'input-span' } %>
+
+    <%= f.input :initial_acum_sickness_hours,
+                label: "Inicial horas de enfermdad acumuladas",
+                wrapper_html: { class: 'detail-item' },
+                label_html: { class: 'label-bold' },
+                input_html: { class: 'input-span', style: "max-height: 50px;" } %>
+    <div>
+      <% if employee.photo.key.present? %>
+        <%= cl_image_tag employee.photo.key, height: 250, width: 250, crop: :fill %>
+      <% end %>
+
+      <%= f.input :photo, as: :file, label: "Fotografia", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    </div>
+
+    <div class="button-group">
+      <%= link_to "Cancel", company_employees_path(@company), class: "btn btn-danger" %>
+      <%= f.button :submit, employee.new_record? ? "Crear Empleado": "Actualizar empleado", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+</div>

@@ -1,0 +1,22 @@
+<div class="form-container">
+  <%= simple_form_for([@company, @contractor], html: { class: 'details-container', local: true }) do |form| %>
+    <%= form.hidden_field :last_name, label: "Nombre del contratista", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' }%>
+    <%= form.input :first_name, label: "Nombre del contratista", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= form.input :contractor_type, label: "Tipo de Contratista", collection: ["Corporación", "Individuo"], prompt: "Seleccione el Tipo", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' }%>
+    <%= form.input :social_security_ein, label: "Seguro Social / EIN", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' }%>
+    <%= form.input :address_line, label: "Dirección", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' }%>
+    <%= form.input :city, label: "Ciudad", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+
+    <%= form.input :country, label: "País", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= form.input :zip_code, label: "Código Postal", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= form.input :phone_number, label: "Teléfono", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+    <%= form.input :email, label: "Email", wrapper_html: { class: 'detail-item' }, label_html: { class: 'label-bold' }, input_html: { class: 'input-span' } %>
+
+
+    <div class="button-group title-item">
+      <%= link_to "Cancelar", company_contractors_path(@company), class: "btn btn-danger" %>
+      <%= form.submit @contractor.new_record? ? "Crear Contratista" : "Actualizar Contratista", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,65 @@
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+  <div class="container-fluid">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag("Logo - Verde - Fondo Oscuro.jpg", class: "logo-img") %>
+    <% end %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <% if user_signed_in? %>
+          <% if @company.present? && @company.attributes.values.any?(&:present?) %>
+            <li class="nav-item active">
+              <%= link_to "Perfil de la compañia", @company, class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "Empleados", company_employees_path(@company), class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "Contratista", company_contractors_path(@company), class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "Nomina", company_payrolls_path(@company), class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "Servicios prestados", company_service_payments_path(@company), class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "Informes", company_reports_path(@company), class: "nav-link" %>
+            </li>
+          <% end %>
+
+
+          <li class="nav-item dropdown">
+          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <% if current_user.photo.present? %>
+              <%= image_tag url_for(current_user.photo), class: "avatar", alt: "dropdown menu" %>
+            <% else %>
+              <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+            <% end %>
+          </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <%= link_to "Política de Privacidad", pages_privacy_policy_path, class: "dropdown-item" %>
+              <%= link_to "Terminos y Condiciones", pages_terms_and_conditions_path, class: "dropdown-item" %>
+              <%= link_to "Actualizar perfil", edit_user_registration_path, class: "dropdown-item" %>
+              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Iniciar Sección", new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .logo-img {
+    width: 100px;
+  }
+</style>

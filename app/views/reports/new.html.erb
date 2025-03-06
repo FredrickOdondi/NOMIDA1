@@ -1,0 +1,123 @@
+<section id="new-report">
+  <div class="form-container" data-controller="report-form">
+
+    <h1>Crear Reporte</h1>
+
+    <%= form_with model: [@company, @report], local: true do |form| %>
+
+      <div class="detail-item">
+        <%= form.hidden_field :generated_date, value: Date.today %>
+      </div>
+
+      <div class="detail-item">
+        <%= form.label :report_type, "Tipo de reporte" %>
+        <%= form.select :report_type,
+          [
+            ['Pagos de nomina', 'tipo_1'],
+            ['Pagos de servicios prestados', 'tipo_2'],
+            ['Vacaciones y enfermedad acumuladas', 'tipo_3'],
+            ['Informe de horas', 'tipo_4'],
+            ['Informe de depósitos de Seguro Social y Medicare', 'tipo_5'],
+            ['Informe de depósitos de Impuesto sobre Ingresos', 'tipo_6'],
+            ['Informe de depósitos de Pagos por Servicios', 'tipo_7']
+          ],
+          { prompt: 'Seleccione un tipo de reporte' },
+          {
+            class: 'input-span',
+            "data-report-form-target": "reportType",
+            data: {
+              action: "change->report-form#updateFilters",
+            }
+          } %>
+      </div>
+
+      <div id="filters-section">
+        <!-- Filters for "Pagos de nomina" -->
+        <div class="filter-group" data-filter-type="tipo_1" data-report-form-target="filterGroup" style="display: none;">
+          <%= form.label :employee, "Empleado" %>
+          <%= form.select :filters_employee,
+              [['Todos', 'all']] + @company.employees.order(first_name: :asc).map { |e| [e.full_name, e.id] },
+              { class: 'input-span', selected: 'all' }
+               %>
+
+          <%= form.label :start_date, "Fecha de inicio" %>
+          <%= form.date_field :filters_start_date_1, class: 'input-span', value: Date.current.beginning_of_year %>
+
+          <%= form.label :end_date, "Fecha de fin" %>
+          <%= form.date_field :filters_end_date_1, class: 'input-span' %>
+        </div>
+
+        <!-- Filters for "Pagos de servicios prestados" -->
+        <div class="filter-group" data-filter-type="tipo_2" data-report-form-target="filterGroup" style="display: none;">
+          <%= form.label :contractor, "Contratista" %>
+          <%= form.select :filters_contractor,
+            [['Todos', 'all']] + @company.contractors.order(first_name: :asc).map {|e| [e.full_name, e.id]},
+            { class: 'input-span', selected: 'all' } %>
+
+          <%= form.label :start_date, "Fecha de inicio" %>
+          <%= form.date_field :filters_start_date, class: 'input-span', value: Date.current.beginning_of_year %>
+
+          <%= form.label :end_date, "Fecha de fin" %>
+          <%= form.date_field :filters_end_date, class: 'input-span' %>
+        </div>
+
+        <!-- Filters for "Vacaciones y enfermedad acumuladas" -->
+        <div class="filter-group" data-filter-type="tipo_3" data-report-form-target="filterGroup" style="display: none;">
+          <%= form.label :employee, "Empleado" %>
+          <%= form.select :filters_employee_2,
+              [['Todos', 'all']] + @company.employees.map { |e| [e.full_name, e.id] },
+              { class: 'input-span', selected: 'all' } %>
+        </div>
+
+        <!-- Filters for "Informe de horas" -->
+        <div class="filter-group" data-filter-type="tipo_4" data-report-form-target="filterGroup" style="display: none;">
+          <%= form.label :start_date, "Fecha de inicio" %>
+          <%= form.date_field :filters_start_date_4, class: 'input-span', value: Date.current.beginning_of_year %>
+
+          <%= form.label :end_date, "Fecha de fin" %>
+          <%= form.date_field :filters_end_date_4, class: 'input-span' %>
+        </div>
+
+        <!-- Filters for "Informe de depósitos de Seguro Social y Medicare" -->
+        <div class="filter-group" data-filter-type="tipo_5" data-report-form-target="filterGroup" style="display: none;">
+          <%= form.label :year, "Año" %>
+          <%= form.select :filters_year_5,
+              (2020..Date.current.year).map { |year| [year, year] },
+              { class: 'input-span', selected: Date.current.year } %>
+        </div>
+
+        <!-- Filters for "Informe de depósitos de Impuesto sobre Ingresos" -->
+        <div class="filter-group" data-filter-type="tipo_6" data-report-form-target="filterGroup" style="display: none;">
+          <%= form.label :year, "Año" %>
+          <%= form.select :filters_year_6,
+              (2020..Date.current.year).map { |year| [year, year] },
+              { class: 'input-span', selected: Date.current.year } %>
+        </div>
+
+        <!-- Filters for "Informe de depósitos de Pagos por Servicios" -->
+        <div class="filter-group" data-filter-type="tipo_7" data-report-form-target="filterGroup" style="display: none;">
+          <%= form.label :year, "Año" %>
+          <%= form.select :filters_year_7,
+              (2020..Date.current.year).map { |year| [year, year] },
+              { class: 'input-span', selected: Date.current.year } %>
+        </div>
+      </div>
+
+      <div class="button-group title-item">
+        <%= link_to "Cancelar", company_reports_path(@company), class: "btn btn-danger" %>
+        <%= form.submit "Crear Reporte", class: 'btn btn-primary' %>
+      </div>
+
+    <% end %>
+  </div>
+</section>
+
+<style>
+  new-report {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 2rem;
+    align-items: center;
+  }
+</style>

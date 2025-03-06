@@ -1,0 +1,36 @@
+<section id="edit-payroll">
+  <%= render "form", company: @company, employees: @employees, payroll: @payroll  %>
+
+</section>
+
+
+<style>
+
+  #edit-payroll {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+    padding: 2rem;
+
+    align-items: center;
+  }
+
+  #new-payroll > div {
+    width: 50%;
+  }
+
+  @media (max-width: 768px) {
+    #new-payroll > div {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    #new-payroll > div {
+      width: 80%;
+    }
+  }
+
+
+</style>
