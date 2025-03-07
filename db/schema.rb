@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,7 +43,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,7 +73,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "contractors", force: :cascade do |t|
-    t.integer "company_id", null: false
+    t.bigint "company_id", null: false
     t.string "first_name"
     t.string "contractor_type"
     t.string "social_security_ein"
@@ -87,7 +90,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "employees", force: :cascade do |t|
-    t.integer "company_id", null: false
+    t.bigint "company_id", null: false
     t.string "first_name"
     t.string "social_security"
     t.date "birth_date"
@@ -121,7 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "parameters", force: :cascade do |t|
-    t.integer "company_id", null: false
+    t.bigint "company_id", null: false
     t.string "parameter_name"
     t.decimal "parameter_value"
     t.datetime "created_at", null: false
@@ -130,7 +133,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "payrolls", force: :cascade do |t|
-    t.integer "employee_id", null: false
+    t.bigint "employee_id", null: false
     t.date "pay_date"
     t.decimal "regular_hours"
     t.decimal "overtime_hours"
@@ -180,7 +183,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "report_configurations", force: :cascade do |t|
-    t.integer "company_id", null: false
+    t.bigint "company_id", null: false
     t.string "report_type"
     t.json "layout"
     t.datetime "created_at", null: false
@@ -189,9 +192,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "reports", force: :cascade do |t|
-    t.integer "company_id", null: false
+    t.bigint "company_id", null: false
     t.string "report_type"
-    t.datetime "generated_date"
+    t.datetime "generated_date", precision: nil
     t.json "filters"
     t.string "file_path"
     t.datetime "created_at", null: false
@@ -200,7 +203,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "service_payments", force: :cascade do |t|
-    t.integer "contractor_id", null: false
+    t.bigint "contractor_id", null: false
     t.date "payment_date"
     t.decimal "gross_amount"
     t.decimal "deduction_amount"
@@ -249,7 +252,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_24_033452) do
   end
 
   create_table "vacation_sick_accruals", force: :cascade do |t|
-    t.integer "employee_id", null: false
+    t.bigint "employee_id", null: false
     t.date "accrual_date"
     t.decimal "vacation_hours"
     t.decimal "sick_hours"
