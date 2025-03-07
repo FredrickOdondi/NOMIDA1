@@ -207,6 +207,8 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pdf-core (0.10.0)
+    pg (1.5.9)
+    pg (1.5.9-x64-mingw-ucrt)
     popper_js (2.11.8)
     prawn (2.5.0)
       matrix (~> 0.4)
@@ -343,6 +345,7 @@ DEPENDENCIES
   jbuilder
   kaminari
   letter_opener
+  pg
   prawn
   prawn-table
   puma (>= 5.0)

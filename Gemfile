@@ -91,3 +91,4 @@ gem 'caxlsx' # for excel export
 gem 'kaminari' # for paginations
 # gem 'pry'
 # gem 'pry-byebug'
+gem 'pg'
