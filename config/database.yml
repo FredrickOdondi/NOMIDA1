@@ -1,9 +1,20 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
   database: nomida
   username: postgres
   password: password
   host: localhost
   port: 5433
-  pool: 5
+
+production:
+  <<: *default
+  database: d23de4ip1hiveu
+  username: u31394goe5oaf6
+  password: p111825b03de25ec77cddf8e23ee159e4cc3ad289416bf0a5d4c7ad12a39a91e1
+  host: c3cj4hehegopde.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
+  port: 5432
