@@ -12,9 +12,11 @@ development:
   port: 5433
 
 production:
-  <<: *default
-  database: d23de4ip1hiveu
-  username: u31394goe5oaf6
-  password: p111825b03de25ec77cddf8e23ee159e4cc3ad289416bf0a5d4c7ad12a39a91e1
-  host: c3cj4hehegopde.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com
-  port: 5432
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] || 5432 %>

@@ -4,6 +4,7 @@ ruby "3.3.7"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.4"
+gem 'pg','>=1.1'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -91,4 +92,3 @@ gem 'caxlsx' # for excel export
 gem 'kaminari' # for paginations
 # gem 'pry'
 # gem 'pry-byebug'
-gem 'pg'

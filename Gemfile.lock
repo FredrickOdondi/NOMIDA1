@@ -343,7 +343,7 @@ DEPENDENCIES
   jbuilder
   kaminari
   letter_opener
-  pg
+  pg (>= 1.1)
   prawn
   prawn-table
   puma (>= 5.0)
