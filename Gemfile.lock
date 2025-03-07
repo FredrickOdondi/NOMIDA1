@@ -343,11 +343,11 @@ DEPENDENCIES
   jbuilder
   kaminari
   letter_opener
-  pg (>= 1.1)
+  pg
   prawn
   prawn-table
   puma (>= 5.0)
-  rails (~> 7.1.4)
+  rails
   sassc-rails
   selenium-webdriver
   simple_form!
